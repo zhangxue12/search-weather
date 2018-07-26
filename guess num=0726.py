@@ -131,7 +131,7 @@ def save_data():
                 f2.writelines(line1)
         f2.writelines(result)
         f2.flush()
-        f2.close
+        f2.close()
 
     print("你目前的总成绩为：")
     print("name,ame_times, ava_time, total_times,min_time")
