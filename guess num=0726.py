@@ -1,7 +1,7 @@
 #coding=utf-8
 import random
 import os
-
+cmp_name = []
 score_list=[]
 old_list = []
 game_times = 0
@@ -35,16 +35,17 @@ def read_data_from_file():
             score_list = f1.readlines()
 
 def name_judge():
-    global name_flag,score_list,wanjia_list,name
+    global name_flag,score_list,wanjia_list,name,cmp_name
     print("现在开始猜数游戏，猜数范围为 1~100，一轮只能猜10次！")
     name = input("请输入昵称： ")
     for m in score_list:
-        if name in m:
-            name_flag = 1
-            wanjia_list = m
-            print("欢迎回来 ： "+name)
-        else:
-            continue
+    	cmp_name = m.split()
+    	if name == cmp_name[0]:
+    		name_flag = 1
+    		wanjia_list = m
+    		print("欢迎回来 ： "+name)
+    	else:
+    		continue
 
 def input_judge(num_list):  
     '''输入并判断'''
@@ -98,12 +99,13 @@ def write(old_list1):
     return '  '+name + " \t" +'   '.join(write_list) + '\n'  #列表类型
 
 def save_data():
-    global game_times,min_time,total_times,ava_time,write_list,count,sum_ava,old_list,score_list,wanjia_list,name_flag,name
+    global cmp_name,game_times,min_time,total_times,ava_time,write_list,count,sum_ava,old_list,score_list,wanjia_list,name_flag,name
     with open("score2.txt","r") as f3:
-    		score_list = f3.readlines()
-    		for m in score_list:
-    			if name in m:
-        			wanjia_list = m
+    	score_list = f3.readlines()
+    	for m in score_list:
+    		cmp_name = m.split()
+    		if name == cmp_name[0]:
+    			wanjia_list = m
     if name_flag == 0:
         f1 = open("score2.txt", "a+")
         old_list = ["unknowname", 0,0,0,11]
@@ -142,7 +144,7 @@ def guess_number():
     while True:
         ans = random.randint(1, 100)
         while i <= 10:
-            print("======第 %d 轮======="%i)
+            print("======第 %d 次======="%i)
             print("你猜我出的是多少：")
             num = input_judge(num_list)
             if num > ans:
